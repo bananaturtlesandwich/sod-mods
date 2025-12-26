@@ -12,26 +12,17 @@
     <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\BepInEx.Harmony.dll"><Private>False</Private></Reference>
     <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.dll"><Private>False</Private></Reference>
     <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.CoreModule.dll"><Private>False</Private></Reference>
-    <!--
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\Mono.Cecil.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\Mono.Cecil.Mdb.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\Mono.Cecil.Pdb.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\Mono.Cecil.Rocks.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\MonoMod.RuntimeDetour.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\BepInEx\core\MonoMod.Utils.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.AnimationModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.AssetBundleModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.ImageConversionModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.InputLegacyModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.InputModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.JSONSerializeModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.UI.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.UIElementsModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.UIModule.dll"><Private>False</Private></Reference>
-    <Reference Include="C:\Users\Admin\games\School of Dragons\DOMain_Data\Managed\UnityEngine.VideoModule.dll"><Private>False</Private></Reference>
-    -->
-   </ItemGroup>
-  <Target Name="copy" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(TargetPath);$(OutputPath)/suit unequip.pdb" DestinationFolder="C:\Users\Admin\games\School of Dragons\BepInEx\scripts"/>
+  </ItemGroup>
+  <Target Name="script" AfterTargets="AfterBuild" Condition="'$(Configuration)' != 'Release'">
+    <Copy SourceFiles="$(TargetPath);$(OutputPath)/$(ProjectName).pdb" DestinationFolder="C:\Users\Admin\games\School of Dragons\BepInEx\scripts"/>
+    <Delete Files="C:\Users\Admin\games\School of Dragons\BepInEx\plugins\$(ProjectName).dll"/>
+  </Target>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <Target Name="plugin" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Users\Admin\games\School of Dragons\BepInEx\plugins"/>
+    <Delete Files="C:\Users\Admin\games\School of Dragons\BepInEx\scripts\$(ProjectName).dll;C:\Users\Admin\games\School of Dragons\BepInEx\scripts\$(ProjectName).pdb"/>
   </Target>
 </Project>
