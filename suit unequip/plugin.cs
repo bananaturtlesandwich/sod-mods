@@ -12,18 +12,35 @@ public sealed class SuitUnequipPlugin : BaseUnityPlugin {
 
     void OnDestroy() => patcher.UnpatchSelf();
 
+    static void RemoveSuit(ref AvAvatarController ctrl) {
+        ctrl.mGlideEndTime = 0f;
+        ctrl.mWasPlayerGliding = false;
+        ctrl.EnableRemoveButton(false);
+        if (!ctrl.mIsRemoveTutorialDone) {
+            ProductData.AddTutorial(ctrl._RemoveTutorialName);
+            ctrl.mIsRemoveTutorialDone = true;
+        }
+        ctrl.pAvatarCustomization.RestoreAvatar(true, false);
+        ctrl.pAvatarCustomization.SaveCustomAvatar();
+    }
+
     [HarmonyPatch(typeof(AvAvatarController), nameof(AvAvatarController.OnGlideLanding))]
-    static class Patch_Land {
-        static void Postfix(ref AvAvatarController __instance) {
-            __instance.mGlideEndTime = 0f;
-            __instance.mWasPlayerGliding = false;
-            __instance.EnableRemoveButton(false);
-            if (!__instance.mIsRemoveTutorialDone) {
-                ProductData.AddTutorial(__instance._RemoveTutorialName);
-                __instance.mIsRemoveTutorialDone = true;
-            }
-            __instance.pAvatarCustomization.RestoreAvatar(true, false);
-            __instance.pAvatarCustomization.SaveCustomAvatar();
+    static class Patch_Ground {
+        static void Postfix(ref AvAvatarController __instance) => RemoveSuit(ref __instance);
+    }
+
+    [HarmonyPatch(typeof(AvAvatarController), nameof(AvAvatarController.CheckForSubStateChange))]
+    static class Patch_Swim {
+        static void Prefix(AvAvatarController __instance, out AvAvatarSubState __state) => __state = __instance.pSubState;
+        static void Postfix(ref AvAvatarController __instance, AvAvatarSubState __state) {
+            if (__state != AvAvatarSubState.SWIMMING && __instance.pSubState == AvAvatarSubState.SWIMMING) RemoveSuit(ref __instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(UiAvatarControls), nameof(UiAvatarControls.OnDragonMount))]
+    static class Patch_Reride {
+        static void Postfix(ref UiAvatarControls __instance, bool mount) {
+            if (mount) RemoveSuit(ref __instance.mAVController);
         }
     }
 }
