@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace SuitUnequip;
 
-[BepInPlugin("spuds.suitunequip", "suit unequip", "1.0.1")]
+[BepInPlugin("spuds.suitunequip", "suit unequip", "1.0.0")]
 public sealed class SuitUnequipPlugin : BaseUnityPlugin {
 
     Harmony patcher = new Harmony("spuds.suitunequip");
