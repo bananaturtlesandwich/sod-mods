@@ -4,12 +4,12 @@ using HarmonyLib;
 
 namespace Discord;
 
-[BepInPlugin("spuds.discordrichpresence", "discord rich presence", "1.0.0")]
+[BepInPlugin("spuds.discordrichpresence", "discord rich presence", "1.0.1")]
 public sealed class DiscordPlugin : BaseUnityPlugin {
 
     static DiscordRpcClient client;
     static Timestamps now = Timestamps.Now;
-    static string message = "Main Menu";
+    static string message = "Loading in";
 
     Harmony patcher = new Harmony("spuds.discordrichpresence");
 
@@ -31,11 +31,9 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
     static class Patch_Transition {
         static void Prefix(string inLevel, bool skipMMOLogin) {
             message = inLevel.ToLower() switch {
-                "arenafrenzydo" => "Playing Fireball Frenzy",
                 "armorwingislanddo" => "On Armorwing island",
-                "auctionshipintdo" => "Shopping at the auction ship",
                 "berkcavesdo" => "Exploring the Berk caves",
-                "berkcloudsdo" => "Visiting Gothi",
+                "berkcloudsdo" => "Surveying the Berkian skies",
                 "berkdocksdo" or "berkdocksnightdo" => "Going around the Berk docks",
                 "berkfarmdo" => "Visiting Sven's farm",
                 "clansdm" => "Catching up with the clan",
@@ -77,7 +75,7 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "dragonstablelavaintdo"
                     or "dragonstablenightlightsintdo"
                     or "dragonstablewaterintdo" => "Relaxing in the stables",
-                "elementmatchdo" => "Playing Element Match",
+                "elementmatchdo" => "Playing Alchemy Adventure",
                 "farmingdo"
                     or "farmingdreadfalldo"
                     or "farmingoceando"
@@ -95,13 +93,13 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "fszipplebackdo" => "Attending Flight School",
                 "glacierislanddo" => "On Glacier island",
                 "greathallschoolintdamageddo" or "greathallschoolintdo" => "Convening in the Great Hall",
-                "greathallschoolintdreamdo" => "Tripping out in the Great Hall",
+                "greathallschoolintdreamdo" => "Having a nightmare in the Great Hall",
                 "hatcheryint02do" or "hatcheryintdm" or "hatcheryintdo" => "Hatching baby dragons",
-                "hauntedhousedo" => "Braving the Haunted House",
+                "hauntedhousedo" => "Braving the Fright of Passage",
                 "helheimsgatedo" => "Passing through Helheim's Gate",
                 "hobblegruntislanddo" => "On Hobblegrunt island",
                 "hubarctic01do" or "hubarcticintdo" => "On Icestorm island",
-                "hubauctionislanddo" or "hubauctionislandvanaheimdo" => "Shopping at the auction",
+                "hubauctionislanddo" or "hubauctionislandvanaheimdo" or "auctionshipintdo" => "Infiltrating the dragon hunter auction",
                 "hubberkdo" => "Chilling in Berk",
                 "hubberknewdo" => "Chilling in New Berk",
                 "hubcenotedo" or "hubcenoteint01do" or "hubcenoteint02do" => "Exploring the Cenote",
@@ -110,41 +108,17 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                 "hubdragonsedgedo" => "Chilling in Dragon's Edge",
                 "hubdreadfallracetrackdo" => "Checking out Ruff and Tuff's Dreadfall race track",
                 "huberuptodonislanddo" => "On Eruptodon island",
-                "hubftuedo" => "ftue?",
-                "hubhiddenworlddo"
-                    or "hubhiddenworldnbdo"
-                    or "hubhiddenworldnbintdo"
-                    or "stcurseofhgmap01do"
-                    or "stcurseofhgmap02do"
-                    or "sthiddenworld01mapdo"
-                    or "sthiddenworld02mapdo"
-                    or "sthiddenworld03mapdo"
-                    or "sthiddenworld04mapdo" => "Exploring the Hidden World",
+                "hubftuedo" => "Enrolling in the School of Dragons",
+                "hubhiddenworlddo" or "hubhiddenworldnbdo" or "hubhiddenworldnbintdo" => "Exploring the Hidden World",
                 "hublookoutdo" => "Scouting at the Lookout",
-                "hubschooldo" => "Learning at the School",
-                "hubschoolhiddenworlddo" => "hubschoolhiddenworld?",
+                "hubschooldo" => "Learning at the School of Dragons",
                 "hubtradewindislanddo" => "On Tradewind island",
                 "hubtrainingdo" => "Defending the Training Grounds",
-                "hubvanaheimdo"
-                    or "hubvanaheimnightdo"
-                    or "stvanaheim02mapdo"
-                    or "stvanaheim04mapdo"
-                    or "stvanaheim06mapdo"
-                    or "stvanaheim09_1mapdo"
-                    or "stvanaheim09_2mapdo"
-                    or "stvanaheim09_3mapdo"
-                    or "stvanaheim09_4mapdo" => "Respecting Vanaheim",
-                "hubwarlordislanddo"
-                    or "stwarlord01mapdo"
-                    or "stwarlord02mapdo"
-                    or "stwarlord03mapdo"
-                    or "stwarlord04mapdo"
-                    or "stwarlord05mapdo"
-                    or "stwarlord07mapdo" => "Infiltrating the Warlord Outpost",
+                "hubvanaheimdo" or "hubvanaheimnightdo" => "Respecting Vanaheim",
+                "hubwarlordislanddo" => "Infiltrating the Warlord Outpost",
                 "hubwilderness01do" => "Surviving the Wilderness",
                 "journaldm" => "Flicking through their journal",
                 "labintdo" => "Running experiments in the lab",
-                "layout_stthawfest04mapdo" => "thawfest map?",
                 "logindm" => "Logging in",
                 "mazedreadfalldo"
                     or "mazesnoggletogdo"
@@ -154,7 +128,6 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "mazetimetrialdo"
                     or "nightlightmazedo"
                     or "snoggletogmazedo" => "Solving a maze",
-                "application" => "application?",
                 "messageboarddm" => "Chatting on the message boards",
                 "mudrakerislanddo" => "On Mudraker island",
                 "myroomintdo" => "Decorating their room",
@@ -168,10 +141,10 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                 "piratequeenshipdo" => "Checking out Stormheart's ship",
                 "profiledm" => "Customising their profile",
                 "profileselectiondo" => "Choosing their profile",
-                "reaperintdo" => "reaper?",
-                "sandbusterlairintdo" or "stsandbuster01mapdo" or "stsandbuster02mapdo" => "Sneaking around the Sandbuster's lair",
+                "reaperintdo" => "Checking out the Reaper shipwreck",
+                "sandbusterlairintdo" => "Sneaking around the Sandbuster's lair",
                 "scuttleclawislanddo" => "On Scuttleclaw island",
-                "shipgraveyarddo" or "stshipgraveyard01mapdo" => "Scouring the Ship Graveyard",
+                "shipgraveyarddo" => "Scouring the Ship Graveyard",
                 "sinkingboatintdo" => "Escaping a sinking ship",
                 "starctict01mapdo"
                     or "starctict02mapdo"
@@ -189,6 +162,8 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "starena06mapdo"
                     or "starena07mapdo"
                     or "starena08mapdo"
+                    or "stcurseofhgmap01do"
+                    or "stcurseofhgmap02do"
                     or "stdreadfall01mapdo"
                     or "stdreadfall02mapdo"
                     or "stdreadfall03mapdo"
@@ -197,6 +172,10 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "stdreadfall06mapdo"
                     or "stdreadfall07mapdo"
                     or "stdreadfall08mapdo"
+                    or "sthiddenworld01mapdo"
+                    or "sthiddenworld02mapdo"
+                    or "sthiddenworld03mapdo"
+                    or "sthiddenworld04mapdo"
                     or "stnightlight01mapdo"
                     or "stnightlight02mapdo"
                     or "stnightlight03mapdo"
@@ -226,6 +205,9 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "strunestonemap06do"
                     or "strunestonemap07do"
                     or "strunestonemap08do"
+                    or "stsandbuster01mapdo"
+                    or "stsandbuster02mapdo"
+                    or "stshipgraveyard01mapdo"
                     or "stsnoggletog1mapdo"
                     or "stsnoggletog2mapdo"
                     or "stsnoggletog3mapdo"
@@ -242,6 +224,7 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "stsummer06mapdo"
                     or "stsummer07mapdo"
                     or "stsummer08mapdo"
+                    or "layout_stthawfest04mapdo"
                     or "stthawfest01mapdo"
                     or "stthawfest02mapdo"
                     or "stthawfest03mapdo"
@@ -259,9 +242,22 @@ public sealed class DiscordPlugin : BaseUnityPlugin {
                     or "sttrainer07mapdo"
                     or "sttrainer08mapdo"
                     or "sttutorialmapdo"
+                    or "stvanaheim02mapdo"
+                    or "stvanaheim04mapdo"
+                    or "stvanaheim06mapdo"
+                    or "stvanaheim09_1mapdo"
+                    or "stvanaheim09_2mapdo"
+                    or "stvanaheim09_3mapdo"
+                    or "stvanaheim09_4mapdo"
+                    or "stwarlord01mapdo"
+                    or "stwarlord02mapdo"
+                    or "stwarlord03mapdo"
+                    or "stwarlord04mapdo"
+                    or "stwarlord05mapdo"
+                    or "stwarlord07mapdo"
                     or "stzipplewraith01mapdo" => "Playing Dragon Tactics",
                 "storesdm" => "Buying supplies at the store",
-                "targetpracticedo" => "target practice?",
+                "targetpracticedo" => "Playing Fireball Frenzy",
                 "titanislanddo" => "On Titan island",
                 "underwatervanaheimdo" => "Diving around Vanaheim",
                 "valkahideoutintdo" => "Sheltering in Valka's sanctuary",
